@@ -1,9 +1,9 @@
 create table public.user
 (
     id serial primary key,
-    username  varchar(200) not null,
+    username  varchar(200) unique not null,
     password varchar(20) not null, 
-    email   varchar(200) not null,
+    email   varchar(200) unique not null,
     location varchar(200) ,
     phone_num int ,
     is_owner boolean,
@@ -49,13 +49,13 @@ create table public.dish
 create table public.payment_type
 (
     id serial primary key,
-    name varchar(100) not null
+    name varchar(100) unique not null
 );
 
 create table public.status
 (
     id serial primary key,
-    name varchar(100) not null
+    name varchar(100)unique  not null
 );
 
 create table public.order
@@ -64,13 +64,13 @@ create table public.order
     payment_method_id bigint references payment_type(id),
     status_id bigint references status(id),
     created_date date default now() not null,
-    created_by bigint references public.user(id) not null,
+    created_by bigint references public.user(id) not null
 );
 
 create table public.tag
 (
     id serial primary key,
-    name varchar(100) not null 
+    name varchar(100) unique not null 
 );
 
 create table public.dish_tag
