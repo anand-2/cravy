@@ -7,6 +7,7 @@ const client = new Client()
 
 
 var express = require("express");
+var bcrypt = require("bcryptjs");
 const insertUsers = require("../queries/users");
 var app = express.Router();
 
@@ -21,6 +22,8 @@ const pool = new Pool({
 
 app.post('/register', async (req, res) => {
     let User = req.body;
+    var salt = bcrypt.genSaltSync(10);
+    User.password = bcrypt.hashSync(User.password, salt);
     await insertUsers(pool, User)
         .then(resp => {
             res.send(resp)

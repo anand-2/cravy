@@ -2,7 +2,7 @@ create table public.user
 (
     id serial primary key,
     username  varchar(200) unique not null,
-    password varchar(20) not null, 
+    password varchar(500) not null, 
     email   varchar(200) unique not null,
     location varchar(200) ,
     phone_num int ,
