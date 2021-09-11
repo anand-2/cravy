@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200&display=swap');
+
+.Jumbo {
+    background-image: url("../../img/title_bg2.jpg");
+    background-color: rgba(0, 0, 0, 0.3);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.5rem;
+}
+
+#title 
+{
+    font-size: 4.5rem;
+    text-shadow: white 0 0 0.5rem;
+}

@@ -8,7 +8,8 @@ const client = new Client()
 
 var express = require("express");
 var bcrypt = require("bcryptjs");
-const insertUsers = require("../queries/users");
+const [insertUsers, getUserInfo] = require("../queries/users");
+
 var app = express.Router();
 
 const pool = new Pool({
@@ -31,6 +32,24 @@ app.post('/register', async (req, res) => {
         .catch(err => {
             res.send(err)
         })
+})
+
+app.post("/login" , async(req,res)=>{
+    const enteredEmail = req.body.email;
+    const enteredPassword = req.body.password;
+
+    await getUserInfo(pool,enteredEmail)
+        .then(resp => {
+            bcrypt.compare(enteredPassword, resp.data.password ).then((success) => {
+                if(success)
+                    res.send("Logged in")
+                else res.send("Login failed")
+            });
+        })
+        .catch(err => {
+            res.send(err)
+        })
+
 })
 
 

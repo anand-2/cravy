@@ -38,4 +38,45 @@ var insertUsers = async function (connPool, user) {
     });
 }
 
-module.exports = insertUsers
+var getUserInfo = async function(connPool , email_address){
+    return new Promise((resolve, reject) => {
+        let resp = {
+            data: undefined,
+            error: true,
+            message: "Something went wrong"
+        }
+
+        connPool.query('SELECT email,password FROM "user" WHERE email = $1',[email_address] , (error, results) => {
+           
+            if(!error && !results.rows[0])
+            {
+                resp = {
+                    error: true,
+                    message: "Email not found"
+                }
+                reject(resp)
+                return;
+            }
+            if (error) {
+                resp = {
+                    error: true,
+                    message: error.message
+                }
+                reject(resp)
+            } else {
+                resp = {
+                    data: {
+                        email :  results.rows[0].email,
+                        password :  results.rows[0].password
+                    },
+                    error: false,
+                    message: "User detailed fetched"
+                }
+            }
+
+            resolve(resp)
+        })
+    });
+}
+
+module.exports = [insertUsers,getUserInfo];
