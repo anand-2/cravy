@@ -1,12 +1,8 @@
 import React from "react";
-import Banner from "../common/Banner";
 
 
 function Register() {
-    return <div>
-        <Banner />
-    </div>
+    return <div><h1>Hello World</h1></div>
 }
-
 
 export default Register;
