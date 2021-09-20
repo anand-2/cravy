@@ -6,6 +6,7 @@ import Register from "./components/sections/Register"
 
 
 
+
 function App() {
   return ( 
     <div className = "App" >

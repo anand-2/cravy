@@ -38,10 +38,12 @@ function LoginDialog() {
                             </Row>
 
 
+                            <div id="loginButton">
+                                <Button variant="primary" type="submit">
+                                    Login
+                                </Button>
+                            </div>
 
-                            <Button variant="primary" type="submit">
-                                Login
-                            </Button>
 
 
                         </Col>
