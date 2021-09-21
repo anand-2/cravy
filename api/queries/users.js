@@ -29,7 +29,7 @@ var insertUsers = async function (connPool, user) {
                 resp = {
                     data: results.rows[0].id,
                     error: false,
-                    message: "Registered user success"
+                    message: "Registration successful"
                 }
             }
 

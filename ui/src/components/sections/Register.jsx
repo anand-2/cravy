@@ -16,46 +16,69 @@ import axios from "axios";
 function Register() {
 
     const locations = ["Delhi", "Bangalore", "Chennai", "Mumbai"]
-    const [value, setValue] = useState("Select Location")
-    const handleSelect = (selected_item) => {
-        setValue(selected_item);
-    }
-
-
+    const [errorMessage, setErrorMessage] = useState("")
+    const [successMessage, setSuccessMessage] = useState("")
     const [user, setUser] = useState({
-        name: "",
+        username: "",
         email: "",
         phone_num: "",
         password: "",
-        location: "",
+        location: "Select location",
     })
 
-
+    const resetAlerts = () => {
+        setErrorMessage("");
+        setSuccessMessage("")
+    }
     const handleChangeName = event => {
-        setUser({ name: event.target.value })
+        setUser(
+            {
+                ...user,
+                username: event.target.value
+            })
     }
     const handleChangeEmail = event => {
-        setUser({ email: event.target.value })
+        setUser(
+            {
+                ...user,
+                email: event.target.value
+            })
     }
     const handleChangePhoneNo = event => {
-        setUser({ phone_num: event.target.value })
+        setUser(
+            {
+                ...user,
+                phone_num: event.target.value
+            })
     }
     const handleChangePass = event => {
-        setUser({ password: event.target.value })
+        setUser(
+            {
+                ...user,
+                password: event.target.value
+            })
     }
-    const handleChangeLocation = event => {
-        setUser({ location: event.target.value })
+    const handleChangeLocation = selected_item => {
+        setUser(
+            {
+                ...user,
+                location: selected_item
+            })
     }
 
 
-    const onSubmit = event => {
-        event.preventDefault()
+    const onRegister = event => {
 
-
-
+        resetAlerts()
         axios.post("http://localhost:5000/users/register", user)
             .then((res) => {
-                console.log(res.data);
+                let data = res.data
+                if (data.error) {
+                    setErrorMessage(data.message)
+                }
+                else {
+                    setSuccessMessage(data.message)
+                }
             }).catch((error) => {
                 console.log(error);
             })
@@ -65,11 +88,25 @@ function Register() {
 
     }
     let locationDropdownItems = locations.map(item => {
-        return <Dropdown.Item key={item} onClick={e => handleSelect(item)}>{item}</Dropdown.Item>
+        return <Dropdown.Item key={item} onClick={e => handleChangeLocation(item)}>{item}</Dropdown.Item>
     })
 
+    let errorAlert = <div className="alert alert-danger" role="alert">
+        {errorMessage}
+    </div>;
 
 
+    let successAlert = <div className="alert alert-success" role="alert">
+        {successMessage}
+    </div>;
+
+    if (errorMessage === "") {
+        errorAlert = undefined;
+    }
+
+    if (successMessage === "") {
+        successAlert = undefined
+    }
     return <div><Banner />
 
         <div>
@@ -80,7 +117,8 @@ function Register() {
                         <Col>
 
                             <h3 style={{ textAlign: "center" }}>Register</h3>
-
+                            {errorAlert}
+                            {successAlert}
                             <Form.Group id="formDialog" className="mb-3" >
                                 <Form.Control onChange={handleChangeName} type="name" placeholder="Username" />
                             </Form.Group>
@@ -93,7 +131,7 @@ function Register() {
                                 <Form.Control onChange={handleChangeEmail} type="email" placeholder="Email" />
                             </Form.Group>
 
-                            <Row><Col md="3"><DropdownButton onChange={handleChangeLocation} className="dropdown-basic-button " variant="secondary" title={value}>
+                            <Row><Col md="3"><DropdownButton className="dropdown-basic-button " variant="secondary" title={user.location}>
                                 {locationDropdownItems}
                             </DropdownButton></Col></Row>
 
@@ -104,7 +142,7 @@ function Register() {
 
                             <Row className="justify-content-center">
                                 <Col style={{ textAlign: "right" }}>
-                                    <Button onSubmit={onSubmit} className="registerButton" variant="danger" type="submit">
+                                    <Button onClick={onRegister} className="registerButton" variant="danger" type="button">
                                         Register
                                     </Button>
 
