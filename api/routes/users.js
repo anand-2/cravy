@@ -3,12 +3,13 @@ const {
     Client
 } = require("pg")
 const client = new Client()
+const jwt = require("jsonwebtoken");
 
 
 
 var express = require("express");
 var bcrypt = require("bcryptjs");
-const [insertUsers, getUserInfo] = require("../queries/users");
+const [insertUsers, getUserInfo, checkUserExist] = require("../queries/users");
 
 var app = express.Router();
 
@@ -25,37 +26,82 @@ app.post('/register', async (req, res) => {
     let User = req.body;
     var salt = bcrypt.genSaltSync(10);
     User.password = bcrypt.hashSync(User.password, salt);
-    let duplicateExists = false;
     //Step 1 : Check if username exists
-
-    
     //Step 2 : insert user if Step 1 returns no rows
-    await insertUsers(pool, User)
-        .then(resp => {
-            res.send(resp)
+    await checkUserExist(pool,User)
+        .then(async resp => {
+            //Username available, proceed to insert new user
+            await insertUsers(pool, User)
+            .then(resp => {
+                res.send(resp)
+            })
+            .catch(err => {
+                //Insertion failed, send error
+                res.send(err)
+            })
         })
         .catch(err => {
+            //Username taken or some error checking username
             res.send(err)
-        })
-})
+        });
+});
+        
+    
 
-app.post("/login" , async(req,res)=>{
+  
+
+app.post("/login", async(req,res)=>{
+  
+
     const enteredEmail = req.body.email;
     const enteredPassword = req.body.password;
+  
 
     await getUserInfo(pool,enteredEmail)
         .then(resp => {
             bcrypt.compare(enteredPassword, resp.data.password ).then((success) => {
                 if(success)
-                    res.send("Logged in")
-                else res.send("Login failed")
+                   {
+                    jwt.sign({resp} , process.env.JWT_SECRET , (err,token) =>{
+                        res.send({token})
+                        return
+                    });
+                   }
+                else 
+                {
+                    res.send("Login failed")
+                    return;
+                }
+                    
             });
         })
         .catch(err => {
-            res.send(err)
-        })
-
+             res.send(err)
+            })
 })
+  
+
+
+    
+    //Verify Token
+function verifyToken(req,res,next){
+    const bearerHeader = req.headers['authorization'];
+    if(typeof bearerHeader!== "undefined")
+    {
+        const bearer = bearerHeader.split(" ")
+        const bearerToken = bearer[1];
+        req.token = bearerToken ;
+        next();
+    }
+    else{
+        res.json("Forbidden Access")
+    }
+}
 
 
 module.exports = app;
+
+
+
+
+//token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNwIjp7ImRhdGEiOnsiZW1haWwiOiJhbmFuZC5ibHIyMDAwQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJGs4Y1JTdE5JZDFTaHVBQzB2YTF4WGVQZ0VrazEwRkg3elVOME5ISVNYeFNuejdNb2tQend5In0sImVycm9yIjpmYWxzZSwibWVzc2FnZSI6IlVzZXIgZGV0YWlsZWQgZmV0Y2hlZCJ9LCJpYXQiOjE2MzI3NTkyODZ9.Kcxc5QmPWQ7X9CY8QXTy5c2FIn3UTfQbH2IqHZ3nENA"

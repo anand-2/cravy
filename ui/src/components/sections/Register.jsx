@@ -80,7 +80,7 @@ function Register() {
                     setSuccessMessage(data.message)
                 }
             }).catch((error) => {
-                console.log(error);
+                setErrorMessage(JSON.stringify(error))
             })
 
 

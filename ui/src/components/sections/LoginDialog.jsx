@@ -39,7 +39,7 @@ function LoginDialog() {
 
 
                             <div id="loginButton">
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="button">
                                     Login
                                 </Button>
                             </div>

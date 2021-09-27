@@ -10,6 +10,43 @@
  * @returns A promise - response object with id on successful insert, and error message on failure
  */
 
+
+ var checkUserExist = async function (connPool, user) {
+    return new Promise((resolve, reject) => {
+        let resp = {
+            data: undefined,
+            error: true,
+            message: "Username or email already exists"
+        }
+        connPool.query('Select * FROM "user" where username = $1 or email = $2 ',[user.username, user.email] ,(error, results) => {
+            if (error) {
+                //Something wrong while executing query
+                resp = {
+                    error: true,
+                    message: error.message
+                }
+                reject(resp)
+            } else {
+                
+                if(results.rows.length==0)
+                {
+                    //Username is available
+                    resp.error = false;
+                    resp.message = "Username and email are available"
+                    resolve(resp);
+                }
+                else
+                {
+                    //Username taken
+                    reject(resp);
+                }
+            }
+        })
+    });
+}
+
+
+
 var insertUsers = async function (connPool, user) {
     return new Promise((resolve, reject) => {
         let resp = {
@@ -79,4 +116,4 @@ var getUserInfo = async function(connPool , email_address){
     });
 }
 
-module.exports = [insertUsers,getUserInfo];
+module.exports = [insertUsers,getUserInfo,checkUserExist];
