@@ -54,8 +54,12 @@ app.post("/login", async(req,res)=>{
   
 
     const enteredEmail = req.body.email;
-    const enteredPassword = req.body.password;
-  
+    const enteredPassword = Buffer.from(req.body.password, 'base64').toString('ascii')
+    let result = {
+        error: true,
+        message: "Login failed. Please check username or password",
+        token : undefined
+    }
 
     await getUserInfo(pool,enteredEmail)
         .then(resp => {
@@ -63,13 +67,16 @@ app.post("/login", async(req,res)=>{
                 if(success)
                    {
                     jwt.sign({resp} , process.env.JWT_SECRET , (err,token) =>{
-                        res.send({token})
+                        result.error = false;
+                        result.message = "Login success"
+                        result.token = token;
+                        res.send(result)
                         return
                     });
                    }
                 else 
                 {
-                    res.send("Login failed")
+                    res.send(result) 
                     return;
                 }
                     
