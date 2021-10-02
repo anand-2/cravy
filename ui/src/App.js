@@ -3,6 +3,7 @@ import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom'  
 import Login from './components/sections/Login'
 import Register from "./components/sections/Register"
+import Home from "./components/sections/Home"
 import axios from 'axios';
 
 
@@ -14,6 +15,7 @@ function App() {
      <Router>  
       <Route exact path='/' component={Login}></Route>
       <Route path='/register' component={Register}></Route>
+      <Route path='/home' component={Home}></Route>
     </Router>
     </div>  
   );

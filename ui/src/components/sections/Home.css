@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200&display=swap');
+
+.navBar{
+    font-size: large;
+    margin: 0.5rem ;
+    
+
+}
+
+#navHeading{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 4rem;
+    padding-left: 2rem;
+}
