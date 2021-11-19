@@ -3,12 +3,22 @@
 .navBar{
     font-size: large;
     margin: 0.5rem ;
-    
-
 }
+
+.navLogo{
+    float: left !important;
+    margin-top: -15px !important;
+}
+
 
 #navHeading{
     font-family: 'Josefin Sans', sans-serif;
     font-size: 4rem;
     padding-left: 2rem;
+}
+
+
+.card {
+    margin-left: 5rem;
+    margin-top: 6rem;
 }

@@ -75,7 +75,7 @@ var insertUsers = async function (connPool, user) {
     });
 }
 
-var getUserInfo = async function(connPool , email_address){
+var getCredentials = async function(connPool , email_address){
     return new Promise((resolve, reject) => {
         let resp = {
             data: undefined,
@@ -116,4 +116,58 @@ var getUserInfo = async function(connPool , email_address){
     });
 }
 
-module.exports = [insertUsers,getUserInfo,checkUserExist];
+var getAllRestaurant = async function(connPool , Card){
+    return new Promise((resolve, reject) => {
+        let resp = {
+            data: undefined,
+            error: true,
+            message: "Something went wrong"
+        }
+
+        connPool.query('SELECT id,name,description,address,image,rating FROM "restaurant" ', (error, results) => {
+           
+            if(!error && !results.rows[0])
+            {
+                resp = {
+                    error: true,
+                    message: "No restaurants available"
+                }
+                reject(resp)
+                return;
+            }
+            if (error) {
+                resp = {
+                    error: true,
+                    message: error.message
+                }
+                reject(resp)
+            } else {
+
+                 var res_list = []
+                for(let i=0;i<results.rows.length;i++)
+                {
+                    res_obj = {
+                            id  : results.rows[i].id,
+                            name :  results.rows[i].name,
+                            description :  results.rows[i].description,
+                            address :  results.rows[i].address,
+                            image :  results.rows[i].image,
+                            rating :  results.rows[i].rating
+                    }
+                   
+                    res_list.push(res_obj)
+                }
+                
+                resp = {   
+                    data : res_list,
+                    error: false,
+                    message: "Restaurants fetched"
+                }
+            }
+
+            resolve(resp)
+        })
+    });
+}
+
+module.exports = [insertUsers,getCredentials,checkUserExist ,getAllRestaurant];

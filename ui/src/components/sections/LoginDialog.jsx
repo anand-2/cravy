@@ -51,6 +51,8 @@ function LoginDialog() {
                 else {
                     //store token to browser
                     window.localStorage.setItem("AUTH_TOKEN", data.token);
+                    window.location = "/Home"
+
                 }
 
             })

@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 
 var express = require("express");
 var bcrypt = require("bcryptjs");
-const [insertUsers, getUserInfo, checkUserExist] = require("../queries/users");
+const [insertUsers, getCredentials, checkUserExist ,getAllRestaurant] = require("../queries/users");
 
 var app = express.Router();
 
@@ -21,6 +21,7 @@ const pool = new Pool({
     port: process.env.DB_PORT,
 })
 
+//Register user
 
 app.post('/register', async (req, res) => {
     let User = req.body;
@@ -48,7 +49,7 @@ app.post('/register', async (req, res) => {
         
     
 
-  
+  //Check login
 
 app.post("/login", async(req,res)=>{
   
@@ -61,7 +62,7 @@ app.post("/login", async(req,res)=>{
         token : undefined
     }
 
-    await getUserInfo(pool,enteredEmail)
+    await getCredentials(pool,enteredEmail)
         .then(resp => {
             bcrypt.compare(enteredPassword, resp.data.password ).then((success) => {
                 if(success)
@@ -86,6 +87,20 @@ app.post("/login", async(req,res)=>{
              res.send(err)
             })
 })
+
+// Get restraunt info 
+
+app.get("/restaurant" ,async(req,res)=>{
+
+    await getAllRestaurant(pool)
+            .then(resp => {
+                res.send(resp)
+            })
+            .catch(err => {
+                //
+                res.send(err)
+            })
+}) 
   
 
 
@@ -107,6 +122,10 @@ function verifyToken(req,res,next){
 
 
 module.exports = app;
+
+
+
+
 
 
 
