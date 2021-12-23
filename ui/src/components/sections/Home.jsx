@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
+import NavbarComponent from "../common/NavbarComponent"
 import "./Home.css"
 import axios from "axios";
 import RestCard from "../common/RestCard";
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Container from "react-bootstrap/Container"
+
+
 
 
 function Home() {
@@ -25,18 +26,7 @@ function Home() {
                 console.log(err)
             })
     }, [])
-    return <div>
-        <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="#home" id="navHeading">Cravy</Navbar.Brand>
-            <Nav className="mr-auto" />
-            <Nav className="navBar">
-
-                <Nav.Link className="navBar" href="/Cart">Cart</Nav.Link>
-
-                <Nav.Link className="navBar" href="#About us">About Us</Nav.Link>
-
-            </Nav>
-        </Navbar >
+    return <div> <NavbarComponent></NavbarComponent>
 
         <Container fluid>
             <Row>
