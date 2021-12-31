@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;700&display=swap');
+
+
 .restInfo {
     margin-top: 2rem;
     height: 17rem;
@@ -13,10 +17,25 @@
     padding-left: 15px;
      
 }
-span {
+
+h3{
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 700;
+}
+p {
     padding-left: 17px;
-    font-family: sans-serif;
-    color: gray;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    font-size: larger;
+    
+}
+
+.dishCard {
+    height: 10rem;
+    width: 40rem;
+    border-color:#343A40;
+    font-weight: 500;
+    font-family: 'Josefin Sans', sans-serif;
     
 }
 
