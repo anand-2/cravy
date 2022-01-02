@@ -39,13 +39,15 @@ p {
     
 }
 
+.dishName{
+    padding-left: 3rem;
+}
 
-
-
-
-
-
-
-
-
-
+.dishImage{
+    min-height: auto;
+    max-height: 120px; 
+    padding-bottom: 10px;
+    padding-left: 60px;
+    border-radius: 40px 40px 0 0;
+     
+}

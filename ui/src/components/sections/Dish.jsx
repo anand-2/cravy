@@ -4,9 +4,11 @@ import "./Dish.css"
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Image from "react-bootstrap/Image"
 import bk from "../../img/bk.png"
+import idly from "../../img/idli-sambar-1.jpg"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import Card from "react-bootstrap/Card"
+
 
 
 function Dish() {
@@ -30,7 +32,26 @@ function Dish() {
                 <Row>
                     <Col >
                         <Card className="dishCard mx-auto">
-                            <Card.Body>Idly sambar  Rs100
+                            <Card.Body className="dishName">
+                                <div>
+                                    <div>
+                                        <Row>
+                                            <Col> <br />
+                                                Idly Sambar
+                                                <p className="rupees">Rs100</p>
+                                            </Col>
+
+                                            <Col>
+                                                <Image className="dishImage" src={idly}></Image>
+                                            </Col>
+                                        </Row>
+
+
+
+                                    </div>
+
+                                </div>
+
                             </Card.Body>
 
                         </Card>
@@ -39,10 +60,10 @@ function Dish() {
                 </Row>
 
             </div>
-        </Jumbotron>
+        </Jumbotron >
 
 
-    </div>
+    </div >
 
 }
 
