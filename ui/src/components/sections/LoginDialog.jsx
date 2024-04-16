@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "./LoginDialog.css";
-import Form from 'react-bootstrap/Form';
-import Button from "react-bootstrap/Button"
-import Container from "react-bootstrap/Container";
-import { Row } from "react-bootstrap";
-import Col from "react-bootstrap/Col";
+import FormGroup from "@mui/material/FormGroup";
+import FormControl from '@mui/material/FormControl';
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container";
+import { Grid, Link, OutlinedInput,InputAdornment } from "@mui/material";
 import axios from "axios";
-
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 
 
@@ -51,7 +52,7 @@ function LoginDialog() {
                 else {
                     //store token to browser
                     window.localStorage.setItem("AUTH_TOKEN", data.token);
-                    window.location = "/Home"
+                    window.location = "/"
 
                 }
 
@@ -72,51 +73,52 @@ function LoginDialog() {
 
 
     return <div>
-        <div>
-            <Form >
                 <Container className="Design">
 
-                    <Row>
-                        <Col>
+                    <Grid container>
+                        <Grid item>
 
                             <h3>Login</h3>
                             {errorAlert}
-                            <Form.Group id="formDialog" className="mb-3" controlId="formBasicEmail">
+                            <FormGroup className="formDialog" controlId="formBasicEmail">
 
-                                <Form.Control onChange={handleChangeEmail} type="email" placeholder="Enter email" />
+                                <OutlinedInput   startAdornment={<InputAdornment position="start"><MailOutlineIcon fontSize="15px"/> </InputAdornment>}  style={{borderRadius:'20px'}} size="small"  onChange={handleChangeEmail} type="email" placeholder="Enter email" />
 
-                            </Form.Group>
+                            </FormGroup>
 
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <FormGroup className="formDialog" controlId="formBasicPassword">
 
-                                <Form.Control onChange={handleChangePassword} type="password" placeholder="Password" />
-                            </Form.Group>
-                            <Row>
-                                <Col>
-                                    <a href="/register"> Or Register here</a>
+                                <OutlinedInput   startAdornment={<InputAdornment position="start"><LockOutlinedIcon fontSize='15px'/> </InputAdornment>} style={{borderRadius:'20px'}}  size="small" onChange={handleChangePassword} type="password" placeholder="Password" />
+                            </FormGroup>
+                            <Grid container gap='5rem' p='0 1.5rem 1.5rem 1.5rem'> 
+                                <Grid item >
+                                    <Link  underline="none"  href="/register"> Register here</Link>
                                     <br />
-                                </Col>
-                                <Col><a href="/iforgot">Forgot Password?</a></Col>
-                            </Row>
+                                </Grid>
+                                <Grid item><Link underline="none" href="/iforgot">Forgot Password?</Link></Grid>
+                            </Grid>
 
 
                             <div id="loginButton">
-                                <Button onClick={onLogin} variant="primary" type="button">
+                                <Button onClick={onLogin} style={{
+                                    borderRadius: 15,
+                                    marginTop:'1rem', 
+                                    width:'9rem'
+                                                                   
+                                }} variant="contained" size="large" color="error" >
                                     Login
                                 </Button>
                             </div>
 
 
 
-                        </Col>
+                        </Grid>
 
-                    </Row>
+                    </Grid>
 
 
                 </Container>
 
-            </Form>
-        </div >
     </div >
 }
 

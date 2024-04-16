@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.title 
+{   
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    margin-left: 4rem;
+    display: flex;
+    color: #33582a;
+     text-shadow: 3px 3px 3px #eeccae;
+    
+}

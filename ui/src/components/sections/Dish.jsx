@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import NavbarComponent from "../common/NavbarComponent";
 import "./Dish.css"
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Image from "react-bootstrap/Image"
+ 
 import bk from "../../img/bk.png"
 import idly from "../../img/idli-sambar-1.jpg"
-import Col from "react-bootstrap/Col"
-import Row from "react-bootstrap/Row"
-import Card from "react-bootstrap/Card"
 
 
 
 function Dish() {
     return <div><NavbarComponent />
-        <Jumbotron className="restInfo" >
-            <div>
+        <div className="restInfo" >
+            {/* <div>
                 <Row>
                     <Col sm={3}>
                         <Image className="image" src={bk}></Image>
@@ -59,8 +55,8 @@ function Dish() {
 
                 </Row>
 
-            </div>
-        </Jumbotron >
+            </div> */}
+        </div >
 
 
     </div >
