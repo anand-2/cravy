@@ -4,25 +4,31 @@ import NavbarComponent from "../common/NavbarComponent"
 import { Box, Card, Grid, Rating } from '@mui/material'
 import RestCard from '../common/RestCard'
 import "./Restaurant.css"
+import SkeletonCard from './SkeletonCard'
 
 
 
 function Restaurant() {
 
        const [restaurants, setRestaurants] = useState([])
+       const [loading,setLoading] = useState(false)
 
 
 
 
     useEffect(() => {
+        setLoading(true)
         axios.get("https://cravy.onrender.com/users/restaurant")
             .then((res) => {
                 let data = res.data.data
 
                 setRestaurants(data)
+                setLoading(false)
             })
             .catch((err) => {
                 console.log(err)
+                setLoading(false)
+
             })
     }, [])
 
@@ -35,12 +41,12 @@ function Restaurant() {
             
             <Box className='popularCard'>
           
-            {restaurants.slice(4,7).map((one_res) => {
+            {loading === false ? restaurants.slice(4,7).map((one_res) => {
                         return <Grid item xs='3'>
                             <RestCard restaurants = {one_res}></RestCard>
                     </Grid>
 
-                    })}
+                    }) : <><SkeletonCard></SkeletonCard><SkeletonCard></SkeletonCard><SkeletonCard></SkeletonCard></>}
             </Box>
         </div>
 
@@ -50,12 +56,12 @@ function Restaurant() {
             <div>    
                 <Grid container gap='1rem' justifyContent='center' display='flex'>
                     
-                    {restaurants.map((one_res) => {
+                {loading === false ? restaurants.map((one_res) => {
                         return <Grid item xs='3'>
-                            <RestCard restaurants = {one_res}></RestCard>
+                            <RestCard loading={loading} restaurants = {one_res}></RestCard>
                     </Grid>
 
-                    })}
+                    }) : <><SkeletonCard></SkeletonCard><SkeletonCard></SkeletonCard><SkeletonCard></SkeletonCard></>}
                     </Grid>           
               
             </div>

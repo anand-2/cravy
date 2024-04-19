@@ -7,12 +7,16 @@ import axios from "axios";
 
 import "./Dish.css"
 import { Box, Grid,Rating } from "@mui/material";
+import SkeletonCard from "./SkeletonCard";
+import SkeletonRestHome from "./SkeletonRestHome";
 
 
 function RestHome() {
     const location = useLocation();
     const [restaurant,setRestaurants] = useState()
     const [dishes,setDishes] = useState()
+    const [loading,setLoading] = useState(false)
+
     const StyledRating = styled(Rating)({
         '& .MuiRating-iconFilled': {
           color: '#FFB000',
@@ -23,27 +27,33 @@ function RestHome() {
 
 
     useEffect(()=>{
+        setLoading(true)
             axios.post("https://cravy.onrender.com/users/resHome",{name : data})
             .then((res) => {
                 let data = res.data.data
                 setRestaurants(data[0])
+                setLoading(false)
                 }
         )
             .catch((err) => {
                 console.log("error",err)
+                setLoading(false)
             })
             
     },[data])
 
     
     useEffect(() => {
+        setLoading(true)
         axios.get("https://cravy.onrender.com/users/dish")
             .then((res) => {
                 let data = res.data.data
                 setDishes(data)
+                setLoading(false)
             })
             .catch((err) => {
                 console.log(err)
+                setLoading(false)
             })
     }, [])
 
@@ -51,7 +61,7 @@ function RestHome() {
 console.log("dish ",dishes)
     return <div style={{overflowX:'hidden'}}><NavbarComponent />
 
-<Grid container justifyContent='center'>
+{loading === false ? <Grid container justifyContent='center'>
             <Grid item xs={7}  marginTop='0rem'>
               <div className="resHeading"><h1 style={{marginBottom:'0px'}}>{restaurant?.name}</h1></div>
                 <p className="resSubHeading" style={{padding:'0 7rem 0 7rem'}}>{restaurant?.description}</p>
@@ -66,7 +76,7 @@ console.log("dish ",dishes)
         </Box >
 
             </Grid>
-            </Grid>
+            </Grid> : <SkeletonRestHome></SkeletonRestHome>}
        
 
     </div >
