@@ -15,7 +15,7 @@ function Restaurant() {
 
 
     useEffect(() => {
-        axios.get("/api/users/restaurant")
+        axios.get("http://localhost:5000/users/restaurant")
             .then((res) => {
                 let data = res.data.data
 

@@ -65,7 +65,7 @@ function RegisterDialog() {
     const onRegister = event => {
 
         resetAlerts()
-        axios.post("/api/users/register", user)
+        axios.post("http://localhost:5000/users/register", user)
             .then((res) => {
                 let data = res.data
                 if (data.error) {
