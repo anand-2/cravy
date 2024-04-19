@@ -15,7 +15,7 @@ function Restaurant() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:5000/users/restaurant")
+        axios.get("https://cravy.onrender.com/users/restaurant")
             .then((res) => {
                 let data = res.data.data
 

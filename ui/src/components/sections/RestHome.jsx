@@ -23,7 +23,7 @@ function RestHome() {
 
 
     useEffect(()=>{
-            axios.post("http://localhost:5000/users/resHome",{name : data})
+            axios.post("https://cravy.onrender.com/users/resHome",{name : data})
             .then((res) => {
                 let data = res.data.data
                 setRestaurants(data[0])
@@ -37,7 +37,7 @@ function RestHome() {
 
     
     useEffect(() => {
-        axios.get("http://localhost:5000/users/dish")
+        axios.get("https://cravy.onrender.com/users/dish")
             .then((res) => {
                 let data = res.data.data
                 setDishes(data)
