@@ -42,7 +42,7 @@ function LoginDialog() {
 
     const onLogin = event => {
         resetAlerts();
-        axios.post("http://localhost:5000/users/login", credentials)
+        axios.post("/api/users/login", credentials)
             .then((res) => {
                 let data = res.data;    //Axios response
                 if (data.error) {
