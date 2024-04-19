@@ -9,16 +9,18 @@ const jwt = require("jsonwebtoken");
 
 var express = require("express");
 var bcrypt = require("bcryptjs");
-const [insertUsers, getCredentials, checkUserExist ,getAllRestaurant] = require("../queries/users");
+const [insertUsers, getCredentials, checkUserExist ,getAllRestaurant,getSingleRestaurant,getDish] = require("../queries/users");
 
 var app = express.Router();
 
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASS,
-    port: process.env.DB_PORT,
+    // user: process.env.DB_USER,
+    // host: process.env.DB_HOST,
+    // database: process.env.DB_DATABASE,
+    // password: process.env.DB_PASS,
+    // port: process.env.DB_PORT,
+
+    connectionString: process.env.connectionString,
 })
 
 //Register user
@@ -101,7 +103,32 @@ app.get("/restaurant" ,async(req,res)=>{
                 res.send(err)
             })
 }) 
+
+app.get("/dish" ,async(req,res)=>{
+
+    await getDish(pool)
+            .then(resp => {
+                res.send(resp)
+            })
+            .catch(err => {
+                //
+                res.send(err)
+            })
+}) 
   
+
+app.post('/resHome', async (req, res) => {
+    let name = req.body.name;   
+    await getSingleRestaurant(pool,name)
+    .then(resp => {
+        res.send(resp)
+    })
+    .catch(err => {
+        
+        res.send(err)
+    })
+});
+        
 
 
     

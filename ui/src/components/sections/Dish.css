@@ -51,3 +51,21 @@ p {
     border-radius: 40px 40px 0 0;
      
 }
+
+.resHeading{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    font-family: "Signika", sans-serif;
+    font-size: 30px;
+
+}
+
+.resSubHeading{
+    font-family: "Signika", sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    justify-content: center;
+    display: flex;
+    text-wrap: pretty;
+}

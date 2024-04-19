@@ -31,9 +31,7 @@ function NavbarComponent() {
                  <div style={{cursor:'pointer'}} onClick={()=>{history.push('/')}}>Home</div>
                     
                  </Grid>
-                 <Grid item>
-                 <div style={{cursor:'pointer'}} onClick={()=>{history.push('/dish')}}>Dishes</div>                    
-                 </Grid>
+                
                  <Grid item>
                  <div style={{cursor:'pointer'}} onClick={()=>{history.push('/restaurant')}}>Restaurants</div>       
                   

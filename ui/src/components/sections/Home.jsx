@@ -5,6 +5,7 @@ import axios from "axios";
 import RestCard from "../common/RestCard";
 import { Button, Grid } from "@mui/material";
 import Lottie from 'react-lottie';
+import { useHistory } from "react-router-dom";
 import easyOrder from "../../lotties/easyOrder.json"
 import delivery from "../../lotties/delivery.json"
 import care from "../../lotties/care.json"
@@ -14,6 +15,7 @@ import care from "../../lotties/care.json"
 
 
 function Home() {
+  const history = useHistory();
 
     const phoneAni = {
         loop: true,
@@ -89,7 +91,7 @@ function Home() {
             <Grid item xs={7}  marginTop='9rem'>
               <div className="containerOneHeading"><h1 style={{marginBottom:'0px'}}>Super Fast</h1><h1 style={{color:'#FF3C00',marginBottom:'0px'}}>Delivery</h1></div>
                 <p className="containerOneBody" style={{padding:'0 7rem 0 8rem'}}>Lightning-fast delivery like never before, ensuring your cravings are satisfied in record time..</p>
-                <Button style={{margin:'0 7rem 0 9rem',backgroundColor:'#FF3C00'}}  variant="contained">Order NOW</Button>
+                <Button onClick={()=>{history.push('/restaurant')}} style={{margin:'0 7rem 0 9rem',backgroundColor:'#FF3C00'}}  variant="contained">Order NOW</Button>
 
                 </Grid>
             </Grid>
@@ -102,7 +104,7 @@ function Home() {
             <Grid item xs={6.8}  marginTop='9rem'>
               <div className="containerOneHeading"><h1 style={{color:'#1F47B7',marginBottom:'0px'}}>Your</h1><h1 style={{marginBottom:'0px'}}>Support System</h1></div>
                 <p className="containerOneBody" style={{padding:'0 7rem 0 6.8rem'}}>Our team is here day and night to assist you, ensuring a seamless ordering experience from start to finish.</p>
-                <Button style={{margin:'0 7rem 0 8rem',backgroundColor:'#1F47B7'}}  variant="contained">Contact</Button>
+                <Button onClick={()=>{history.push('/contact')}} style={{margin:'0 7rem 0 8rem',backgroundColor:'#1F47B7'}}  variant="contained">Contact</Button>
                 </Grid>
 
                 <Grid item xs={5.2}>

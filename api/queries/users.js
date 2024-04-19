@@ -170,4 +170,117 @@ var getAllRestaurant = async function(connPool , Card){
     });
 }
 
-module.exports = [insertUsers,getCredentials,checkUserExist ,getAllRestaurant];
+var getSingleRestaurant = async function(connPool , name){
+    return new Promise((resolve, reject) => {
+        let resp = {
+            data: undefined,
+            error: true,
+            message: "Something went wrong"
+        }
+
+        connPool.query('SELECT id,name,description,address,image,rating FROM "restaurant" WHERE name = $1',[name], (error, results) => {
+           
+            if(!error && !results.rows[0])
+            {
+                resp = {
+                    error: true,
+                    message: "No restaurants available"
+                }
+                reject(resp)
+                return;
+            }
+            if (error) {
+                resp = {
+                    error: true,
+                    message: error.message
+                }
+                reject(resp)
+            } else {
+
+                 var res_list = []
+                for(let i=0;i<results.rows.length;i++)
+                {
+                    res_obj = {
+                            id  : results.rows[i].id,
+                            name :  results.rows[i].name,
+                            description :  results.rows[i].description,
+                            address :  results.rows[i].address,
+                            image :  results.rows[i].image,
+                            rating :  results.rows[i].rating
+                    }
+                   
+                    res_list.push(res_obj)
+                }
+                
+                resp = {   
+                    data : res_list,
+                    error: false,
+                    message: "Restaurants fetched"
+                }
+            }
+
+            resolve(resp)
+        })
+    });
+}
+
+
+var getDish = async function(connPool){
+    return new Promise((resolve, reject) => {
+        let resp = {
+            data: undefined,
+            error: true,
+            message: "Something went wrong"
+        }
+
+        connPool.query('SELECT id,restaurant_id, name, description, image, veg, rating, price from "dish"', (error, results) => {
+           
+            if(!error && !results.rows[0])
+            {
+                resp = {
+                    error: true,
+                    message: "No dishes available"
+                }
+                reject(resp)
+                return;
+            }
+            if (error) {
+                resp = {
+                    error: true,
+                    message: error.message
+                }
+                reject(resp)
+            } else {
+
+                 var dish_list = []
+                for(let i=0;i<results.rows.length;i++)
+                {
+                    res_obj = {
+                            id  : results.rows[i].id,
+                            resid  : results.rows[i].restaurant_id,
+                            name :  results.rows[i].name,
+                            description :  results.rows[i].description,
+                            image :  results.rows[i].image,
+                            rating :  results.rows[i].rating,
+                            veg : results.rows[i].veg,
+                            price : results.rows[i].price
+
+                    }
+                   
+                    dish_list.push(res_obj)
+                }
+                
+                resp = {   
+                    data : dish_list,
+                    error: false,
+                    message: "Dishes fetched"
+                }
+            }
+
+            resolve(resp)
+        })
+    });
+}
+
+
+module.exports = [insertUsers,getCredentials,checkUserExist ,getAllRestaurant,getSingleRestaurant,getDish];
