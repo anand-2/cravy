@@ -6,6 +6,7 @@ import Home from "./components/sections/Home";
 import Restaurant from "./components/sections/Restaurant"
 import axios from 'axios';
 import RestHome from './components/sections/RestHome';
+import Contact from './components/sections/Contact';
 
 
 
@@ -20,6 +21,8 @@ function App() {
       <Route path='/login' component={Login}></Route>
       <Route path='/resHome' component={RestHome}></Route>
       <Route path='/restaurant' component={Restaurant}></Route>
+      <Route path='/Contact' component={Contact}></Route>
+
 
     </Router>
     </div>  

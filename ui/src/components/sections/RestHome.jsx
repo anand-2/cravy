@@ -9,6 +9,7 @@ import "./Dish.css"
 import { Box, Grid,Rating } from "@mui/material";
 import SkeletonCard from "./SkeletonCard";
 import SkeletonRestHome from "./SkeletonRestHome";
+import DishCard from "./DishCard";
 
 
 function RestHome() {
@@ -61,7 +62,8 @@ function RestHome() {
 console.log("dish ",dishes)
     return <div style={{overflowX:'hidden'}}><NavbarComponent />
 
-{loading === false ? <Grid container justifyContent='center'>
+{loading === false && restaurant && dishes  ? <>
+        <Grid container justifyContent='center'>
             <Grid item xs={7}  marginTop='0rem'>
               <div className="resHeading"><h1 style={{marginBottom:'0px'}}>{restaurant?.name}</h1></div>
                 <p className="resSubHeading" style={{padding:'0 7rem 0 7rem'}}>{restaurant?.description}</p>
@@ -72,11 +74,12 @@ console.log("dish ",dishes)
                 </Grid>
             <Grid item xs={5} >
             <Box justifyContent='right' display='flex'>
-       <Box sx={{backgroundImage:`url(${restaurant?.image})`,width:'500px',backgroundPosition:'center',backgroundSize:'cover',backgroundRepeat:'no-repeat'}} height='300px' borderRadius= '50% 0% 0% 50%'  ></Box>
-        </Box >
-
+            <Box sx={{backgroundImage:`url(${restaurant?.image})`,width:'500px',backgroundPosition:'center',backgroundSize:'cover',backgroundRepeat:'no-repeat'}} height='300px' borderRadius= '50% 0% 0% 50%'  ></Box>
+             </Box >
+    
             </Grid>
-            </Grid> : <SkeletonRestHome></SkeletonRestHome>}
+            
+        </Grid> <DishCard dish={dishes}></DishCard></> : <SkeletonRestHome></SkeletonRestHome>}
        
 
     </div >
